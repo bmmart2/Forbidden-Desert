@@ -1,4 +1,10 @@
 package com.bmmart2.forbiddendesert.Components.Deck;
 
-public class Card {
+import java.awt.image.BufferedImage;
+
+abstract class Card {
+
+    protected String desc;
+    protected BufferedImage img;
+
 }
