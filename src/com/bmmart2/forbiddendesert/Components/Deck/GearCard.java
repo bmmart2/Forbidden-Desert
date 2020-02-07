@@ -12,7 +12,7 @@ public class GearCard extends Card {
 
     }
 
-    @Override
+
     // Executed when card is drawn from the deck.
     public void draw() {
 

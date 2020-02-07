@@ -6,7 +6,6 @@ import com.bmmart2.forbiddendesert.Direction;
 public class StormCard extends Card {
 
     private StormAction action;
-
     private Direction direction;
     private int moveAmt;
 
