@@ -11,7 +11,10 @@ public class Clue extends Location {
     private Orientation orientation;
 
     public Clue() {
+        super();
     }
+
+
 
     public Artifact getItem() {
         return item;

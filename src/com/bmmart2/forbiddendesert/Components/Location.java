@@ -9,7 +9,12 @@ public class Location {
     private BufferedImage img;
     private LocationType type;
 
-    public Location(String id, String desc, BufferedImage img, LocationType type) {
+    protected Location() {
+        desc = "";
+        id = "";
+    }
+
+    protected Location(String id, String desc, BufferedImage img, LocationType type) {
         this.id = id;
         this.desc = desc;
         this.img = img;
