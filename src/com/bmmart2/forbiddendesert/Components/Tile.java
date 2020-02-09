@@ -13,6 +13,13 @@ public class Tile {
         item = Artifact.NULL;
     }
 
+    protected Tile(Location l) {
+        flipped = false;
+        sand = 0;
+        item = Artifact.NULL;
+        loc = l;
+    }
+
     public Location getLoc() {
         return loc;
     }
