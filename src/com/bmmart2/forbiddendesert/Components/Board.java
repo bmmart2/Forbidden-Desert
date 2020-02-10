@@ -17,6 +17,7 @@ public class Board {
     private Point2D storm = new Point2D.Double();
     private Point2D landingPad = new Point2D.Double();
     private int remainingSand;
+    private boolean initialized = false;
 
 
     public Board() {
@@ -27,6 +28,12 @@ public class Board {
     //TODO: Allow ability to resize board before generation
     //Initializes the board. Currently only works for 5x5 sized games.
     public void init() {
+
+        if (initialized) {
+            System.out.println("Board already initialized.");
+            return;
+        }
+        initialized = true;
         LinkedList<Location> locations = Location.generateLocations();
         Collections.shuffle(locations);
 
