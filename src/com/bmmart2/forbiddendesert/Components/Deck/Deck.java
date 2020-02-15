@@ -22,6 +22,9 @@ public class Deck {
                 throw new IllegalArgumentException("A deck can only contain cards of the same type.");
             }
         }
+        else {
+            cards.addLast(c);
+        }
     }
 
     public void shuffle() {

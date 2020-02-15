@@ -13,7 +13,7 @@ public class Clue extends Location {
     private Orientation orientation;
 
     public Clue(Artifact a, Orientation o) {
-        super(LocationType.CLUE);
+        this.setType(LocationType.CLUE);
         this.item = a;
         this.orientation = o;
     }

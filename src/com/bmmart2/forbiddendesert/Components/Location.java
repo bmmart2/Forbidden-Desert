@@ -73,6 +73,7 @@ public class Location {
         return type;
     }
 
+    protected void setType(LocationType lt) { type = lt; }
 
     //Generates an unshuffled list of locations specified by the constants
     protected static LinkedList<Location> generateLocations() {

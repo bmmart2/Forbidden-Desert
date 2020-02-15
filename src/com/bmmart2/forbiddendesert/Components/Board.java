@@ -34,6 +34,7 @@ public class Board {
             return;
         }
         initialized = true;
+        tiles = new Tile[n][m];
         LinkedList<Location> locations = Location.generateLocations();
         Collections.shuffle(locations);
 
@@ -44,7 +45,7 @@ public class Board {
                     tiles[i][j] = new Tile(new Location(LocationType.STORM));
                 }
                 else {
-                    if (locations.peekFirst().getType() == LocationType.LANDINGPAD)
+                    if (locations.peekFirst().getType().equals(LocationType.LANDINGPAD))
                         landingPad.setLocation(j, i);
                     tiles[i][j] = new Tile(locations.pollFirst());
                 }
