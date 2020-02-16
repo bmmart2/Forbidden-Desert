@@ -3,6 +3,7 @@ package com.bmmart2.forbiddendesert.Player;
 import com.bmmart2.forbiddendesert.Components.Deck.Deck;
 import com.bmmart2.forbiddendesert.Components.Deck.DeckCreator;
 import com.bmmart2.forbiddendesert.Components.Deck.GearCard;
+import com.bmmart2.forbiddendesert.Components.Gear;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,5 +26,11 @@ class PlayerTest {
 
     @org.junit.jupiter.api.Test
     void hasGearCard() {
+        Player p1 = new Player("p1");
+        GearCard gc = new GearCard(Gear.DUNE_BLASTER);
+        p1.addGearCard(gc);
+        GearCard gc2 = new GearCard(Gear.DUNE_BLASTER);
+        assertFalse(p1.hasGearCard(gc2));
+        assertTrue(p1.hasGearCard(gc));
     }
 }

@@ -1,7 +1,9 @@
 package com.bmmart2.forbiddendesert.Player;
 
 import com.bmmart2.forbiddendesert.Components.Artifact;
+import com.bmmart2.forbiddendesert.Components.Board;
 import com.bmmart2.forbiddendesert.Components.Deck.GearCard;
+import com.bmmart2.forbiddendesert.Direction;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -15,15 +17,31 @@ public class Player {
     private LinkedList<GearCard> gear = new LinkedList<GearCard>();
     private int canteenSize;
     private int canteenContents;
-    private boolean isInitialized = false;
+    private int turn;
+    private boolean isInitialized;
 
-    public Player(String name) {
-        this.name = name;
+    protected Player() {
+        name = "";
         loc = new Point(0,0);
+        isInitialized = false;
+        turn = 0;
     }
 
-    public void hardMove(Point p) {
+    public Player(String name) {
+        this();
+        this.name = name;
+    }
+
+    public Point2D getLoc() {
+        return loc;
+    }
+
+    public void hardMove(Point2D p) {
         loc = p;
+    }
+
+    public void hardMove(int x, int y) {
+        loc.setLocation(x, y);
     }
 
     public void drink() {
@@ -33,6 +51,8 @@ public class Player {
     public void printGear() {
         System.out.println(gear.toString());
     }
+
+
 
     public GearCard getGearAt(int pos) {
         if (pos >= gear.size())
