@@ -1,9 +1,10 @@
 package com.bmmart2.forbiddendesert.Components.Deck;
 
+import java.math.*;
 import java.awt.image.BufferedImage;
 
 abstract class Card {
-    protected int id;
+    protected double id = Math.random() * 1000 + 1;
     protected String desc;
     protected BufferedImage img;
 

@@ -11,19 +11,21 @@ public class Deck {
     public Deck() {}
 
     //Adds card to tail of deck
-    protected void add(Card c) {
+    protected boolean add(Card c) {
         if (!cards.isEmpty()) {
             if ((c instanceof GearCard && cards.peekFirst() instanceof GearCard)
                     || (c instanceof StormCard && cards.peekFirst() instanceof StormCard)) {
                 cards.addLast(c);
-                return;
+                return true;
             }
             else {
-                throw new IllegalArgumentException("A deck can only contain cards of the same type.");
+                System.out.println("Deck Error: Card type mismatch.");
+                return false;
             }
         }
         else {
             cards.addLast(c);
+            return true;
         }
     }
 
@@ -35,9 +37,19 @@ public class Deck {
     }
 
     public Card drawTop() {
+        if (cards.isEmpty()) {
+            return null;
+        }
         Card c = cards.pollFirst();
         history.push(c);
         return c;
+    }
+
+    public void resetDeck() {
+        while (!history.isEmpty()) {
+            cards.addLast(history.pop());
+        }
+        Collections.shuffle(cards);
     }
 
     public List<Card> viewHistory() {
@@ -47,6 +59,19 @@ public class Deck {
             l.add(temp.pop());
         }
         return l;
+    }
+
+    public Card peekAt(int cardFromTop) {
+        if (cardFromTop >= cards.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            return cards.get(cardFromTop);
+        }
+    }
+
+    public boolean contains(Card c) {
+        return cards.contains(c);
     }
 
     public int getMaxDeckSize() {
