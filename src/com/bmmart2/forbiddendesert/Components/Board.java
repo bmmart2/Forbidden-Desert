@@ -1,6 +1,7 @@
 package com.bmmart2.forbiddendesert.Components;
 
 import com.bmmart2.forbiddendesert.Components.Deck.StormCard;
+import com.bmmart2.forbiddendesert.Direction;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import static javafx.scene.input.KeyCode.Y;
 
 public class Board {
 
@@ -54,8 +57,8 @@ public class Board {
                     tiles[x][y] = new Tile(new Location(LocationType.STORM));
                 }
                 else {
-                    if (locations.peekFirst().getType().equals(LocationType.LANDINGPAD))
-                        landingPad.setLocation(y, x);
+//                    if (locations.peekFirst().getType().equals(LocationType.LANDINGPAD))
+//                        landingPad.setLocation(y, x);
                     tiles[x][y] = new Tile(locations.pollFirst());
                 }
             }
@@ -72,12 +75,44 @@ public class Board {
         bury(tiles[4][2]);
     }
 
-    public void executeStormCard(StormCard sc) {
-
-    }
 
     public Tile getTile(Point2D point2D) {
         return tiles[(int)point2D.getY()][(int)point2D.getX()];
+    }
+
+    protected boolean moveStorm(Direction d) {
+        switch (d) {
+            case NORTH:
+                if (!(storm.getY() == m - 1)) {
+                    swapTiles(storm, new Point((int)storm.getX(), (int)storm.getY()+1));
+                    bury(storm);
+                    storm.setLocation(storm.getX(), storm.getY()+1);
+                }
+                break;
+            case SOUTH:
+                if (!(storm.getY() == 0)) {
+                    swapTiles(storm, new Point((int)storm.getX(), (int)storm.getY()-1));
+                    bury(storm);
+                    storm.setLocation(storm.getX(), storm.getY()-1);
+                }
+                break;
+            case EAST:
+                if (!(storm.getX() == n - 1)) {
+                    swapTiles(storm, new Point((int)storm.getX()+1, (int)storm.getY()));
+                    bury(storm);
+                    storm.setLocation(storm.getX()+1, storm.getY());
+                }
+                break;
+            case WEST:
+                if (!(storm.getX() == 0)) {
+                    swapTiles(storm, new Point((int) storm.getX() - 1, (int) storm.getY()));
+                    bury(storm);
+                    storm.setLocation(storm.getX() - 1, storm.getY());
+                }
+            default:
+                throw new IllegalArgumentException("Direction must be cardinal.");
+        }
+        return true;
     }
 
     protected void dig(Point2D p) {
@@ -98,5 +133,11 @@ public class Board {
     protected void bury(Tile t) {
         t.bury();
         remainingSand--;
+    }
+
+    private void swapTiles(Point2D p1, Point2D p2) {
+        Tile temp = tiles[(int)p1.getY()][(int)p1.getX()];
+        tiles[(int)p1.getY()][(int)p1.getX()] = tiles[(int)p2.getY()][(int)p2.getX()];
+        tiles[(int)p2.getY()][(int)p2.getX()] = temp;
     }
 }

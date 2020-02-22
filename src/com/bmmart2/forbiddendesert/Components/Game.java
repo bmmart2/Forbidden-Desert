@@ -1,7 +1,6 @@
 package com.bmmart2.forbiddendesert.Components;
 
-import com.bmmart2.forbiddendesert.Components.Artifact;
-import com.bmmart2.forbiddendesert.Components.Board;
+import com.bmmart2.forbiddendesert.Components.Deck.StormCard;
 import com.bmmart2.forbiddendesert.Direction;
 import com.bmmart2.forbiddendesert.Player.Navigator;
 import com.bmmart2.forbiddendesert.Player.Player;
@@ -11,10 +10,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.bmmart2.forbiddendesert.Direction.SOUTH;
-
 public class Game {
 
+    private Barometer barometer = new Barometer();
     private ArrayList<Player> players = new ArrayList<Player>();
     private Board board = new Board();
     private HashMap<Artifact,Boolean> collectedArtifacts = new HashMap<>();
@@ -33,8 +31,8 @@ public class Game {
                 d == Direction.NORTHEAST) && !(p instanceof Navigator)) {
             return false;
         }
-        int px = (int) p.getLoc().getX();
-        int py = (int) p.getLoc().getY();
+        int px = (int) p.getPoint().getX();
+        int py = (int) p.getPoint().getY();
         if (px == Board.n - 1) {
             if (d == Direction.EAST || d == Direction.NORTHEAST || d == Direction.SOUTHEAST) {
                 return false;
@@ -90,6 +88,37 @@ public class Game {
             return false;
         p.hardMove(newLoc);
         return true;
+    }
+
+    public boolean executeStormCard(StormCard sc) {
+        if (sc.getAction() == StormAction.STORM_MOVE) {
+            Point2D temp;
+            for (int i = 0; i < sc.getMoveAmt(); i++) {
+                temp = board.getStormLoc();
+                board.moveStorm(sc.getDirection());
+                for (Player p : players) {
+                    if (p.getPoint().equals(board.getStormLoc())) {
+                       p.hardMove(temp);
+                    }
+                }
+                //drawBoard()
+            }
+        }
+        else if (sc.getAction() == StormAction.SUN_BEATS_DOWN) {
+            doSunBeatsDown();
+        }
+        else if (sc.getAction() == StormAction.STORM_PICKS_UP) {
+            barometer.increase();
+        }
+        return true;
+    }
+
+    private void doSunBeatsDown() {
+        for (Player p : players) {
+            if (!(p.isSolarShieldActive() || board.getTile(p.getPoint()).getLoc().getType() == LocationType.SHELTER)) {
+                p.drink();
+            }
+        }
     }
 
 }

@@ -15,6 +15,9 @@ public class Player {
     private String name;
     private Point2D loc;
     private LinkedList<GearCard> gear = new LinkedList<GearCard>();
+
+
+    private boolean solarShieldActive;
     private int canteenSize;
     private int canteenContents;
     private int turn;
@@ -25,6 +28,7 @@ public class Player {
         loc = new Point(0,0);
         isInitialized = false;
         turn = 0;
+        solarShieldActive = false;
     }
 
     public Player(String name) {
@@ -32,7 +36,7 @@ public class Player {
         this.name = name;
     }
 
-    public Point2D getLoc() {
+    public Point2D getPoint() {
         return loc;
     }
 
@@ -52,7 +56,9 @@ public class Player {
         System.out.println(gear.toString());
     }
 
-
+    public boolean isSolarShieldActive() {
+        return solarShieldActive;
+    }
 
     public GearCard getGearAt(int pos) {
         if (pos >= gear.size())
