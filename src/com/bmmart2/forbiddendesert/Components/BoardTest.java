@@ -15,18 +15,26 @@ class BoardTest {
         Board b = new Board();
         Tile t = new Tile();
         Tile t1 = new Tile();
+
+        //N and S coverage
         b.setStormLoc(new Point(2, 2));
         b.setTile(new Point(2,2), t);
         b.setTile(new Point(2, 3), t1);
         b.moveStorm(Direction.SOUTH);
         assertEquals(t, b.getTile(new Point(2,3)));
+        assertTrue(b.getStormLoc().equals(new Point(2, 3)));
         b.moveStorm(Direction.NORTH);
         assertEquals(t1, b.getTile(new Point(2,3)));
         assertEquals(t, b.getTile(new Point(2,2)));
+
+        //E and W coverage
         Tile t3 = new Tile();
         b.setTile(new Point(3,2), t3);
         b.moveStorm(Direction.EAST);
         assertEquals(t3, b.getTile(new Point(2, 2)));
         assertTrue(b.getStormLoc().equals(new Point(3, 2)));
+        b.moveStorm(Direction.WEST);
+        assertEquals(t3, b.getTile(new Point(3, 2)));
+        assertTrue(b.getStormLoc().equals(new Point(2, 2)));
     }
 }

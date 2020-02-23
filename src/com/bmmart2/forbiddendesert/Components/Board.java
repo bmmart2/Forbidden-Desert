@@ -116,6 +116,7 @@ public class Board {
                     bury(storm);
                     storm.setLocation(storm.getX() - 1, storm.getY());
                 }
+                break;
             default:
                 throw new IllegalArgumentException("Direction must be cardinal.");
         }
