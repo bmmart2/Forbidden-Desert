@@ -1,6 +1,6 @@
 package com.bmmart2.forbiddendesert.Components;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +17,5 @@ class BarometerTest {
         assertEquals(b.getDrawAmt(), 6);
         c.setTick(0);
         assertEquals(c.getDrawAmt(), 2);
-
-
-
     }
 }

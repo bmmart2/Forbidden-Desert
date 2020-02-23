@@ -30,12 +30,16 @@ public class Board {
     public Board() {
         storm.setLocation(0,0);
         remainingSand = maxSand;
+        tiles = new Tile[m][n];
+    }
+
+    protected void setStormLoc(Point2D p) {
+        storm = p;
     }
 
     public Point2D getStormLoc() {
         return (Point2D) storm.clone();
     }
-
 
     //TODO: Allow ability to resize board before generation
     //Initializes the board. Currently only works for 5x5 sized games.
@@ -46,7 +50,6 @@ public class Board {
             return;
         }
         initialized = true;
-        tiles = new Tile[n][m];
         LinkedList<Location> locations = Location.generateLocations();
         Collections.shuffle(locations);
 
@@ -75,6 +78,10 @@ public class Board {
         bury(tiles[4][2]);
     }
 
+    protected Tile setTile(Point2D p, Tile t) {
+        this.tiles[(int)p.getY()][(int)p.getX()] = t;
+        return t;
+    }
 
     public Tile getTile(Point2D point2D) {
         return tiles[(int)point2D.getY()][(int)point2D.getX()];
@@ -82,14 +89,14 @@ public class Board {
 
     protected boolean moveStorm(Direction d) {
         switch (d) {
-            case NORTH:
+            case SOUTH:
                 if (!(storm.getY() == m - 1)) {
                     swapTiles(storm, new Point((int)storm.getX(), (int)storm.getY()+1));
                     bury(storm);
                     storm.setLocation(storm.getX(), storm.getY()+1);
                 }
                 break;
-            case SOUTH:
+            case NORTH:
                 if (!(storm.getY() == 0)) {
                     swapTiles(storm, new Point((int)storm.getX(), (int)storm.getY()-1));
                     bury(storm);

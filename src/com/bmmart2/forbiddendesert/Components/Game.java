@@ -43,22 +43,22 @@ public class Game {
                 return false;
             }
         }
-        if (py == Board.m - 1) {
+        if (py == 0) {
             if (d == Direction.NORTH || d == Direction.NORTHWEST || d == Direction.NORTHEAST) {
                 return false;
             }
         }
-        else if (py == 0) {
+        else if (py == Board.m - 1) {
             if (d == Direction.SOUTH || d == Direction.SOUTHWEST || d == Direction.SOUTHEAST) {
                 return false;
             }
         }
         Point2D newLoc = new Point();
         switch (d) {
-            case NORTH:
+            case SOUTH:
                 newLoc.setLocation(px, py + 1);
                 break;
-            case SOUTH:
+            case NORTH:
                 newLoc.setLocation(px, py - 1);
                 break;
             case EAST:
@@ -105,20 +105,15 @@ public class Game {
             }
         }
         else if (sc.getAction() == StormAction.SUN_BEATS_DOWN) {
-            doSunBeatsDown();
+            for (Player p : players) {
+                if (!(p.isSolarShieldActive() || board.getTile(p.getPoint()).getLoc().getType() == LocationType.SHELTER)) {
+                    p.drink();
+                }
+            }
         }
         else if (sc.getAction() == StormAction.STORM_PICKS_UP) {
             barometer.increase();
         }
         return true;
     }
-
-    private void doSunBeatsDown() {
-        for (Player p : players) {
-            if (!(p.isSolarShieldActive() || board.getTile(p.getPoint()).getLoc().getType() == LocationType.SHELTER)) {
-                p.drink();
-            }
-        }
-    }
-
 }
