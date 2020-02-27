@@ -27,7 +27,7 @@ public class Player {
         name = "";
         loc = new Point(0,0);
         isInitialized = false;
-        turn = 0;
+        turn = 4;
         solarShieldActive = false;
     }
 
@@ -38,6 +38,22 @@ public class Player {
 
     public Point2D getPoint() {
         return loc;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public boolean hasTurnLeft() {
+        return turn > 0;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public void decrementTurn() {
+        this.turn--;
     }
 
     public void hardMove(Point2D p) {
