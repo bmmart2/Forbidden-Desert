@@ -1,6 +1,5 @@
 package com.bmmart2.forbiddendesert.Components;
 
-import com.bmmart2.forbiddendesert.Components.Deck.StormCard;
 import com.bmmart2.forbiddendesert.Direction;
 
 import java.awt.*;
@@ -8,9 +7,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-
-import static javafx.scene.input.KeyCode.Y;
 
 public class Board {
 
@@ -22,8 +18,7 @@ public class Board {
     private Tile[][] tiles;
 
     private Point2D storm = new Point2D.Double();
-
-    private Point2D landingPad = new Point2D.Double();
+    private ArrayList<Point2D> tunnels = new ArrayList<>();
     private int remainingSand;
     private boolean initialized = false;
 
@@ -54,15 +49,13 @@ public class Board {
         Collections.shuffle(locations);
 
         storm.setLocation(n/2, m/2);
-        for (int x = 0; x < n; x++) {
-            for (int y = 0; y < m; y++) {
-                if (y == storm.getX() && x == storm.getY()) {
-                    tiles[x][y] = new Tile(new Location(LocationType.STORM));
+        for (int y = 0; y < m; y++) {
+            for (int x = 0; x < n; x++) {
+                if (x == storm.getX() && y == storm.getY()) {
+                    tiles[y][x] = new Tile(new Location(LocationType.STORM));
                 }
                 else {
-//                    if (locations.peekFirst().getType().equals(LocationType.LANDINGPAD))
-//                        landingPad.setLocation(y, x);
-                    tiles[x][y] = new Tile(locations.pollFirst());
+                    tiles[y][x] = new Tile(locations.pollFirst());
                 }
             }
         }
@@ -85,6 +78,24 @@ public class Board {
 
     public Tile getTile(Point2D point2D) {
         return tiles[(int)point2D.getY()][(int)point2D.getX()];
+    }
+
+    public Tile getTile(int x, int y) {
+        Point2D point = new Point(x,y);
+        return getTile(point);
+    }
+
+    public ArrayList<Point2D> getTunnels() {
+        return tunnels;
+    }
+
+    public Point2D getTunnels(int index) {
+        if (index >= tunnels.size()) {
+            return null;
+        }
+        else {
+            return tunnels.get(index);
+        }
     }
 
     protected boolean moveStorm(Direction d) {

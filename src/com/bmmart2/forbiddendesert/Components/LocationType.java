@@ -2,10 +2,10 @@ package com.bmmart2.forbiddendesert.Components;
 
 public enum LocationType {
     STORM,
-    SHELTER,
+    TUNNEL,
     CLUE,
     WELL,
-    WELLFAKE,
+    MIRAGE,
     LANDINGPAD,
     GEAR
 }

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BarometerTest {
 
-
     @Test
     void getDrawAmt() {
         Barometer b = new Barometer();

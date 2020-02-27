@@ -3,8 +3,6 @@ package com.bmmart2.forbiddendesert.Components;
 import com.bmmart2.forbiddendesert.Components.Deck.Clue;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
 
 public class Location {
@@ -31,10 +29,10 @@ public class Location {
                 this.desc = "This tile contains water.";
                 this.type = LocationType.WELL;
                 break;
-            case WELLFAKE:
+            case MIRAGE:
                 //this.img = img;
                 this.desc = "This well has dried up.";
-                this.type = LocationType.WELLFAKE;
+                this.type = LocationType.MIRAGE;
                 break;
             case LANDINGPAD:
                 //this.img = img;
@@ -46,10 +44,10 @@ public class Location {
                 this.desc = "An artifact buried by the sands.";
                 this.type = LocationType.GEAR;
                 break;
-            case SHELTER:
+            case TUNNEL:
                 //this.img = img;
                 this.desc = "A welcome relief from the scorching heat.";
-                this.type = LocationType.SHELTER;
+                this.type = LocationType.TUNNEL;
                 break;
             case STORM:
                 //this.img = img;
@@ -87,13 +85,13 @@ public class Location {
             list.add(new Location(LocationType.WELL));
         }
         for (i = 0; i < WATERFAKETILES; i++) {
-            list.add(new Location(LocationType.WELLFAKE));
+            list.add(new Location(LocationType.MIRAGE));
         }
         for (i = 0; i < LANDINGPADTILES; i++) {
             list.add(new Location(LocationType.LANDINGPAD));
         }
         for (i = 0; i < TUNNELTILES; i++) {
-            list.add(new Location(LocationType.SHELTER));
+            list.add(new Location(LocationType.TUNNEL));
         }
         list.add(new Clue(Artifact.COMPASS, Clue.Orientation.NS));
         list.add(new Clue(Artifact.COMPASS, Clue.Orientation.EW));

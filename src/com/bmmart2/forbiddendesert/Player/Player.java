@@ -11,12 +11,12 @@ import java.util.LinkedList;
 
 public class Player {
 
+    public final static int MAX_TURN = 4;
+
     //private int id;
     private String name;
     private Point2D loc;
     private LinkedList<GearCard> gear = new LinkedList<GearCard>();
-
-
     private boolean solarShieldActive;
     private int canteenSize;
     private int canteenContents;
@@ -27,7 +27,7 @@ public class Player {
         name = "";
         loc = new Point(0,0);
         isInitialized = false;
-        turn = 4;
+        turn = MAX_TURN;
         solarShieldActive = false;
     }
 
