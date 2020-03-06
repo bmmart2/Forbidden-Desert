@@ -1,13 +1,12 @@
 package com.bmmart2.forbiddendesert.Components;
 
-import com.bmmart2.forbiddendesert.Components.Deck.Clue;
-
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Location {
 
-    public static int GEARTILES = 12;
+    /* Definition of tile configuration */
+    public static int GEARTILES = 9;
     public static int WATERTILES = 2;
     public static int WATERFAKETILES = 1;
     public static int LANDINGPADTILES = 1;

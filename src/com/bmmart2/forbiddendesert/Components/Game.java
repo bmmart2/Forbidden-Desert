@@ -147,8 +147,7 @@ public class Game {
             return;
         }
         if (board.getTunnels().size() <= index) {
-            System.out.println("No turns left.");
-            return;
+            throw new IllegalArgumentException("Index of desired tunnel cannot be greater than amount of tunnels.");
         }
         if (board.getTile(getActivePlayer().getPoint()).getLoc().getType() == LocationType.TUNNEL) {
           getActivePlayer().hardMove(board.getTunnels(index));

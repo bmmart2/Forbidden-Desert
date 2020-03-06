@@ -1,4 +1,4 @@
-package com.bmmart2.forbiddendesert.Components.Deck;
+package com.bmmart2.forbiddendesert.Components;
 
 import com.bmmart2.forbiddendesert.Components.Artifact;
 import com.bmmart2.forbiddendesert.Components.Location;
@@ -24,7 +24,7 @@ public class Clue extends Location {
         return item;
     }
 
-    public Orientation getOrientation() {
+    public Clue.Orientation getOrientation() {
         return orientation;
     }
 

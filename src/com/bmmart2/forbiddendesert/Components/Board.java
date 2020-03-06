@@ -10,9 +10,19 @@ import java.util.LinkedList;
 
 public class Board {
 
+    /*
+    Standards on coordinate references:
+
+        All public functions returning and/or using as inputs such as
+        Point2Ds, X's, or Y's referring to a coordinate of some tile on
+        the board are referenced in standard (X,Y) format. The board
+        takes place in Quadrant-IV. X grows from left to right, while
+         Y grows from top to bottom.
+     */
+
     //must be set to 5
-    public static final int n = 5;
-    public static final int m = 5;
+    public static final int n = 5; //x
+    public static final int m = 5; //y
     final int maxSand = 48;
 
     private Tile[][] tiles;
@@ -34,6 +44,10 @@ public class Board {
 
     public Point2D getStormLoc() {
         return (Point2D) storm.clone();
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 
     //TODO: Allow ability to resize board before generation
@@ -152,6 +166,24 @@ public class Board {
     protected void bury(Tile t) {
         t.bury();
         remainingSand--;
+    }
+
+    public void dump() {
+        if (!this.initialized)
+            return;
+        System.out.println("--BOARD DUMP BEGIN--\n");
+        System.out.println("Storm Loc = " + storm.toString());
+        System.out.println("Remaining Sand = " + this.remainingSand +"/"+this.maxSand);
+        for (int i = 0; i < Board.m; i++) {
+            System.out.println("[Y] = "+i);
+            for (int j = 0; j < Board.n; j++) {
+                System.out.printf("\t [X] = %d \n",j);
+                System.out.printf("\t\t LocationType = ");
+                System.out.println(this.tiles[i][j].getLoc().getType());
+                System.out.println("\t\t Sand = " + this.tiles[i][j].getSand());
+                System.out.println("\t\t Item = " + (this.getTile(i,j).hasItem() ? this.getTile(i,j).getItem() : "null"));
+            }
+        }
     }
 
     private void swapTiles(Point2D p1, Point2D p2) {
