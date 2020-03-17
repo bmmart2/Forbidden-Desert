@@ -4,9 +4,10 @@ import com.bmmart2.forbiddendesert.Direction;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
+
+import static com.bmmart2.forbiddendesert.Components.Artifact.*;
+import static com.bmmart2.forbiddendesert.Components.LocationType.TUNNEL;
 
 public class Board {
 
@@ -29,12 +30,14 @@ public class Board {
 
     private Point2D storm = new Point2D.Double();
     private ArrayList<Point2D> tunnels = new ArrayList<>();
+    private HashMap<Artifact, Clue> locatedClues;
     private int remainingSand;
     private boolean initialized = false;
 
     public Board() {
         storm.setLocation(0,0);
         remainingSand = maxSand;
+        locatedClues = new HashMap<>();
         tiles = new Tile[m][n];
     }
 
@@ -44,6 +47,27 @@ public class Board {
 
     public Point2D getStormLoc() {
         return (Point2D) storm.clone();
+    }
+
+    private HashMap<Artifact, Clue> getLocatedClues() { return locatedClues; }
+
+    public boolean recordClue(Clue c) {
+        if (c.getItem() == NULL)
+            throw new IllegalArgumentException("ERROR: Clue has no item.");
+        if (locatedClues.containsKey(c.getItem())) {
+            if (locatedClues.get(c.getItem()).equals(c)) {
+                throw new IllegalStateException("ERROR: Clue array duplicate.");
+            }
+            //both orientations of clue discovered, spawn item
+            Point2D intersection = (c.getOrientation().equals(Clue.Orientation.NS) ?
+                    calculateIntersection(search(c), search(locatedClues.get(c.getItem()))) :
+                    calculateIntersection(search(locatedClues.get(c.getItem())), search(c)));
+            getTile(intersection).setItem(c.getItem());
+        }
+        else {
+            locatedClues.put(c.getItem(), c);
+        }
+    return true;
     }
 
     public boolean isInitialized() {
@@ -73,7 +97,6 @@ public class Board {
                 }
             }
         }
-
         //TODO: Generalize the diamond bury pattern
         bury(tiles[0][2]);
         bury(tiles[1][1]);
@@ -86,11 +109,15 @@ public class Board {
     }
 
     protected Tile setTile(Point2D p, Tile t) {
+        if (p.getX() >= n || p.getY() >= m || p.getX() < 0 || p.getY() < 0)
+            throw new ArrayIndexOutOfBoundsException("ERROR: Invalid point.");
         this.tiles[(int)p.getY()][(int)p.getX()] = t;
         return t;
     }
 
     public Tile getTile(Point2D point2D) {
+        if (point2D.getX() >= n || point2D.getY() >= m || point2D.getX() < 0 || point2D.getY() < 0)
+            throw new ArrayIndexOutOfBoundsException("ERROR: Invalid point.");
         return tiles[(int)point2D.getY()][(int)point2D.getX()];
     }
 
@@ -99,8 +126,46 @@ public class Board {
         return getTile(point);
     }
 
+    public Tile getTile(Point2D point, Direction d) {
+        switch (d) {
+            case NORTH:
+                point.setLocation(point.getX(), point.getY()-1);
+                break;
+            case SOUTH:
+                point.setLocation(point.getX(), point.getY()+1);
+                break;
+            case EAST:
+                point.setLocation(point.getX()+1, point.getY());
+                break;
+            case WEST:
+                point.setLocation(point.getX()-1, point.getY());
+                break;
+            case NORTHEAST:
+                point.setLocation(point.getX()+1, point.getY()-1);
+                break;
+            case NORTHWEST:
+                point.setLocation(point.getX()-1, point.getY()-1);
+                break;
+            case SOUTHEAST:
+                point.setLocation(point.getX()+1, point.getY()+1);
+                break;
+            case SOUTHWEST:
+                point.setLocation(point.getX()-1, point.getY()+1);
+            default:
+                throw new IllegalArgumentException("Error: Not valid direction");
+        }
+        return getTile(point);
+    }
+
     public ArrayList<Point2D> getTunnels() {
         return tunnels;
+    }
+
+    protected void addTunnel(Point2D point2D) {
+        Tile t = getTile(point2D);
+        if (t.getLoc().getType() != TUNNEL)
+            throw new IllegalArgumentException("UNKNOWN: Tile is not a tunnel!");
+        tunnels.add(point2D);
     }
 
     public Point2D getTunnels(int index) {
@@ -184,6 +249,22 @@ public class Board {
                 System.out.println("\t\t Item = " + (this.getTile(i,j).hasItem() ? this.getTile(i,j).getItem() : "null"));
             }
         }
+        System.out.println("--BOARD DUMP END--");
+    }
+
+    protected Point2D search(Location location) {
+        for (int y = 0; y < m; y++) {
+            for (int x = 0; x < n; x++) {
+                if (getTile(x, y).getLoc() == location) {
+                    return new Point(x,y);
+                }
+            }
+        }
+        return null;
+    }
+
+    protected static Point2D calculateIntersection(Point2D ns, Point2D ew) {
+        return new Point((int)ns.getX(),(int)ew.getY());
     }
 
     private void swapTiles(Point2D p1, Point2D p2) {
@@ -191,4 +272,5 @@ public class Board {
         tiles[(int)p1.getY()][(int)p1.getX()] = tiles[(int)p2.getY()][(int)p2.getX()];
         tiles[(int)p2.getY()][(int)p2.getX()] = temp;
     }
+
 }

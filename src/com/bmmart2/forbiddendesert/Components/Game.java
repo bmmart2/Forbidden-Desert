@@ -2,8 +2,10 @@ package com.bmmart2.forbiddendesert.Components;
 
 import com.bmmart2.forbiddendesert.Components.Deck.Deck;
 import com.bmmart2.forbiddendesert.Components.Deck.DeckCreator;
+import com.bmmart2.forbiddendesert.Components.Deck.GearCard;
 import com.bmmart2.forbiddendesert.Components.Deck.StormCard;
 import com.bmmart2.forbiddendesert.Direction;
+import com.bmmart2.forbiddendesert.Player.Climber;
 import com.bmmart2.forbiddendesert.Player.Navigator;
 import com.bmmart2.forbiddendesert.Player.Player;
 
@@ -104,7 +106,7 @@ public class Game {
         }
         if (newLoc.equals(board.getStormLoc()))
             return false;
-        if (board.getTile(newLoc).getSand() >= 2)
+        if (board.getTile(newLoc).getSand() >= 2 && !(p instanceof Climber))
             return false;
         p.hardMove(newLoc);
         p.decrementTurn();
@@ -131,7 +133,8 @@ public class Game {
         }
         else if (sc.getAction() == StormAction.SUN_BEATS_DOWN) {
             for (Player p : players) {
-                if (!(p.isSolarShieldActive() || board.getTile(p.getPoint()).getLoc().getType() == LocationType.TUNNEL)) {
+                if (!(p.isSolarShieldActive() || (board.getTile(p.getPoint()).getLoc().getType() == LocationType.TUNNEL
+                        && board.getTile(p.getPoint()).isFlipped()))) {
                     p.drink();
                 }
             }
@@ -146,12 +149,46 @@ public class Game {
         if (!getActivePlayer().hasTurnLeft()) {
             return;
         }
+        if (!board.getTile(getActivePlayer().getPoint()).isFlipped()) {
+            throw new IllegalStateException("Tile must be flipped to use.");
+        }
         if (board.getTunnels().size() <= index) {
             throw new IllegalArgumentException("Index of desired tunnel cannot be greater than amount of tunnels.");
         }
         if (board.getTile(getActivePlayer().getPoint()).getLoc().getType() == LocationType.TUNNEL) {
           getActivePlayer().hardMove(board.getTunnels(index));
           getActivePlayer().decrementTurn();
+        }
+    }
+
+    public void flipTile() {
+        if (!getActivePlayer().hasTurnLeft()) {
+            return;
+        }
+        if (board.getTile(getActivePlayer().getPoint()).isFlipped())
+            throw new IllegalStateException("Tile already flipped.");
+
+        Tile t = board.getTile(getActivePlayer().getPoint());
+        t.flip();
+        //TODO: display some sort of display for flipped card
+        switch (t.getLoc().getType()) {
+            case GEAR:
+                GearCard g = (GearCard)geardeck.drawTop();
+                getActivePlayer().addGearCard(g);
+                break;
+            case WELL:
+                for (Player p : players) {
+                    if (p.getPoint().equals(getActivePlayer().getPoint())) {
+                        p.addWater(2);
+                    }
+                }
+                break;
+            case TUNNEL:
+                board.addTunnel(getActivePlayer().getPoint());
+                break;
+            case CLUE:
+                Clue c = (Clue)t.getLoc();
+                //board.getClues().add(c);
         }
     }
 

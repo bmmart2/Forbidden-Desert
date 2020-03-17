@@ -36,21 +36,23 @@ public class Tile {
         return item;
     }
 
+    protected void setItem(Artifact a) { item = a; }
+
     public boolean hasItem() {
         return !(item == Artifact.NULL);
     }
 
-    public void dig() {
+    protected void dig() {
         if (sand == 0)
             return;
         sand--;
     }
 
-    public void bury() {
+    protected void bury() {
         sand++;
     }
 
-    public void flip() {
+    protected void flip() {
         if (flipped) {
             return;
         }

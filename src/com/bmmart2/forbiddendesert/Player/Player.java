@@ -68,6 +68,12 @@ public class Player {
         canteenContents--;
     }
 
+    public void addWater() { canteenContents++; }
+
+    public void addWater(int i) {
+        canteenContents += i;
+    }
+
     public void printGear() {
         System.out.println(gear.toString());
     }

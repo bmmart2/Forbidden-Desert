@@ -5,9 +5,12 @@ import javafx.geometry.Orientation;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+//TODO: write more unit tests!
 
 class BoardTest {
 
@@ -83,5 +86,12 @@ class BoardTest {
         assertEquals(Location.WATERFAKETILES, ltmap.get(LocationType.MIRAGE),
                 "Amt of mirage tiles not equal to definition.");
 
+    }
+
+    @Test
+    void calculateIntersection() {
+        Point2D ns = new Point(2,1);
+        Point2D ew = new Point(0,3);
+        assertTrue(Board.calculateIntersection(ns,ew).equals(new Point(2,3)));
     }
 }
