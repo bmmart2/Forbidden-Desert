@@ -173,7 +173,7 @@ public class Game {
         //TODO: display some sort of display for flipped card
         switch (t.getLoc().getType()) {
             case GEAR:
-                GearCard g = (GearCard)geardeck.drawTop();
+                GearCard g = (GearCard) geardeck.drawTop();
                 getActivePlayer().addGearCard(g);
                 break;
             case WELL:
@@ -187,8 +187,10 @@ public class Game {
                 board.addTunnel(getActivePlayer().getPoint());
                 break;
             case CLUE:
-                Clue c = (Clue)t.getLoc();
-                //board.getClues().add(c);
+                board.recordClue((Clue) t.getLoc());
+                break;
+            default:
+                return;
         }
     }
 

@@ -89,6 +89,7 @@ class BoardTest {
     }
 
     @Test
+    //TODO: Write more exhaustive test cases
     void calculateIntersection() {
         Point2D ns = new Point(2,1);
         Point2D ew = new Point(0,3);

@@ -51,7 +51,7 @@ public class Board {
 
     private HashMap<Artifact, Clue> getLocatedClues() { return locatedClues; }
 
-    public boolean recordClue(Clue c) {
+    public void recordClue(Clue c) {
         if (c.getItem() == NULL)
             throw new IllegalArgumentException("ERROR: Clue has no item.");
         if (locatedClues.containsKey(c.getItem())) {
@@ -67,7 +67,6 @@ public class Board {
         else {
             locatedClues.put(c.getItem(), c);
         }
-    return true;
     }
 
     public boolean isInitialized() {
