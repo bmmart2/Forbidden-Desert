@@ -26,7 +26,7 @@ class BoardTest {
         b.setTile(new Point(2, 3), t1);
         b.moveStorm(Direction.SOUTH);
         assertEquals(t, b.getTile(new Point(2,3)));
-        assertTrue(b.getStormLoc().equals(new Point(2, 3)));
+        assertEquals(new Point(2, 3), b.getStormLoc());
         b.moveStorm(Direction.NORTH);
         assertEquals(t1, b.getTile(new Point(2,3)));
         assertEquals(t, b.getTile(new Point(2,2)));
@@ -36,10 +36,10 @@ class BoardTest {
         b.setTile(new Point(3,2), t3);
         b.moveStorm(Direction.EAST);
         assertEquals(t3, b.getTile(new Point(2, 2)));
-        assertTrue(b.getStormLoc().equals(new Point(3, 2)));
+        assertEquals(new Point(3, 2), b.getStormLoc());
         b.moveStorm(Direction.WEST);
         assertEquals(t3, b.getTile(new Point(3, 2)));
-        assertTrue(b.getStormLoc().equals(new Point(2, 2)));
+        assertEquals(new Point(2, 2), b.getStormLoc());
     }
 
     @Test
@@ -55,6 +55,8 @@ class BoardTest {
         LocationType lt;
         Artifact a;
 
+        b.dump();
+
         for (int i = 0; i < Board.m; i++) {
             for (int j = 0; j < Board.n; j++) {
                 assertNotNull(b.getTile(i, j), "Tile does not exist at "+j+", "+i+" (X,Y std.)" );
@@ -64,8 +66,7 @@ class BoardTest {
                     a = ((Clue)(b.getTile(i,j).getLoc())).getItem();
                     artifactmap.put(a, artifactmap.containsKey(a) ? artifactmap.get(a)+1 : 1);
                     if (omap.containsKey(a)) {
-                        assertFalse(omap.get(a).equals(((Clue) (b.getTile(i, j).getLoc())).getOrientation()),
-                                "Two of the same Clues and orientations detected!");
+                        assertNotEquals(((Clue) (b.getTile(i, j).getLoc())).getOrientation(), omap.get(a), "Two of the same Clues and orientations detected!");
                     }
                     else {
                         omap.put(a,((Clue)(b.getTile(i,j).getLoc())).getOrientation());
@@ -93,6 +94,6 @@ class BoardTest {
     void calculateIntersection() {
         Point2D ns = new Point(2,1);
         Point2D ew = new Point(0,3);
-        assertTrue(Board.calculateIntersection(ns,ew).equals(new Point(2,3)));
+        assertEquals(new Point(2, 3), Board.calculateIntersection(ns, ew));
     }
 }

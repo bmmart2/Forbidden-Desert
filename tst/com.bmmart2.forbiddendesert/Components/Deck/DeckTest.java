@@ -1,5 +1,9 @@
 package com.bmmart2.forbiddendesert.Components.Deck;
 
+import com.bmmart2.forbiddendesert.Components.Deck.Card;
+import com.bmmart2.forbiddendesert.Components.Deck.Deck;
+import com.bmmart2.forbiddendesert.Components.Deck.GearCard;
+import com.bmmart2.forbiddendesert.Components.Deck.StormCard;
 import com.bmmart2.forbiddendesert.Components.Gear;
 import com.bmmart2.forbiddendesert.Components.StormAction;
 import com.bmmart2.forbiddendesert.Direction;
