@@ -1,4 +1,4 @@
 package com.bmmart2.forbiddendesert.Player;
 
-public class WaterCarrier {
+public class WaterCarrier extends Player {
 }

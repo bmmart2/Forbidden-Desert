@@ -1,4 +1,4 @@
 package com.bmmart2.forbiddendesert.Player;
 
-public class Excavator {
+public class Excavator extends Player {
 }

@@ -22,6 +22,7 @@ class PlayerTest {
         p1.addGearCard(gc);
         p1.passGearCard(p2, p1.getGearAt(0));
         assertEquals(gc, p2.getGearAt(0));
+        assertFalse(p1.hasGearCard(gc));
     }
 
     @org.junit.jupiter.api.Test

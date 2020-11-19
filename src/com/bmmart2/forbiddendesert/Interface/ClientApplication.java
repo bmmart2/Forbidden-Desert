@@ -10,9 +10,9 @@ public class ClientApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Client-fx.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         primaryStage.setTitle("Forbidden Desert");
-        primaryStage.setScene(new Scene(root, 500,420));
+        primaryStage.setScene(new Scene(root, 900,600));
         primaryStage.show();
     }
 

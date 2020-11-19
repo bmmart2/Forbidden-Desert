@@ -12,6 +12,9 @@ public class GearCard extends Card {
 
     }
 
+    public Gear getItem() {
+        return item;
+    }
 
     // Executed when card is drawn from the deck.
     public void draw() {

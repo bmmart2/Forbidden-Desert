@@ -11,6 +11,8 @@ import java.util.LinkedList;
 
 public class Player {
 
+    public enum PlayerTypes {ARCHAEOLOGIST, CLIMBER, EXCAVATOR, METEOROLOGIST, NAVIGATOR, WATER_CARRIER}
+
     public final static int MAX_TURN = 4;
 
     //private int id;
@@ -90,9 +92,12 @@ public class Player {
 
     public boolean passGearCard(Player p, GearCard g) {
         if (this.loc.equals(p.loc)) {
-            if (this.gear.contains(g)) {
-                p.gear.add(this.gear.remove());
+            if (this.gear.removeFirstOccurrence(g)) {
+                p.gear.add(g);
                 return true;
+            }
+            else {
+                throw new RuntimeException(p.name + " does not have the card " + g.getItem());
             }
         }
         return false;
