@@ -1,4 +1,4 @@
-package com.bmmart2.forbiddendesert.Interface;
+package com.bmmart2.forbiddendesert.Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,11 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class ClientApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        System.out.println(new File("").getCanonicalPath());
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainMenu.fxml"));
         primaryStage.setTitle("Forbidden Desert");
         primaryStage.setScene(new Scene(root, 900,600));
         primaryStage.show();

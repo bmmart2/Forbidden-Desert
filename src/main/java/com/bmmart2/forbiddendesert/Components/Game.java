@@ -12,6 +12,7 @@ import com.bmmart2.forbiddendesert.Player.Player;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Game {
@@ -30,6 +31,10 @@ public class Game {
         return players.size();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public Player getActivePlayer() {
         return players.get(activePlayer);
     }
@@ -42,6 +47,12 @@ public class Game {
         board.init();
         stormdeck = DeckCreator.generateStormDeck();
         geardeck = DeckCreator.generateGearDeck();
+    }
+
+    public Game(ArrayList<Player> players) {
+        this();
+        this.players = players;
+        Collections.shuffle(this.players);
     }
 
     public void addPlayer(Player player) {

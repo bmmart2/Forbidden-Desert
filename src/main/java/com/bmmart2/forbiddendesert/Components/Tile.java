@@ -1,16 +1,21 @@
 package com.bmmart2.forbiddendesert.Components;
 
+import javafx.scene.image.Image;
+
 public class Tile {
 
     private Location loc;
     private boolean flipped;
     private int sand;
     private Artifact item;
+    private Image flippedImg120x120;
+    private int backImg;
 
     protected Tile() {
         flipped = false;
         sand = 0;
         item = Artifact.NULL;
+        backImg = -1;
     }
 
     protected Tile(Location l) {

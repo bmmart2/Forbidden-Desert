@@ -1,11 +1,18 @@
-package com.bmmart2.forbiddendesert.Interface;
+package com.bmmart2.forbiddendesert.Controllers;
 
+import com.bmmart2.forbiddendesert.Components.Game;
 import com.bmmart2.forbiddendesert.Player.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +21,7 @@ import java.util.*;
 public class GameSetupController implements Initializable {
     @FXML
     private Label countLabel;
-    private List<Player> playerList;
+    private ArrayList<Player> playerList;
     private HashSet<Player.PlayerTypes> toggled;
 
     private IntegerProperty count = new SimpleIntegerProperty(0);
@@ -70,21 +77,52 @@ public class GameSetupController implements Initializable {
         }
     }
 
-    public void submitOptions() {
+    public void submitOptions(ActionEvent e) {
         playerList = new ArrayList<>();
         for (Player.PlayerTypes p : toggled) {
             switch (p) {
-                case ARCHAEOLOGIST -> playerList.add(new Archaeologist());
-                case CLIMBER -> playerList.add(new Climber());
-                case EXCAVATOR -> playerList.add(new Excavator());
-                case METEOROLOGIST -> playerList.add(new Meteorologist());
-                case NAVIGATOR -> playerList.add(new Navigator());
-                case WATER_CARRIER -> playerList.add(new WaterCarrier());
-                default -> throw new IllegalArgumentException("Invalid player class.");
+                case ARCHAEOLOGIST:
+                    playerList.add(new Archaeologist());
+                    break;
+                case CLIMBER:
+                    playerList.add(new Climber());
+                    break;
+                case EXCAVATOR:
+                    playerList.add(new Excavator());
+                    break;
+                case METEOROLOGIST:
+                    playerList.add(new Meteorologist());
+                    break;
+                case NAVIGATOR:
+                    playerList.add(new Navigator());
+                    break;
+                case WATER_CARRIER:
+                    playerList.add(new WaterCarrier());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid player class.");
             }
         }
         for (Player p : playerList) {
             System.out.println(p.getClass());
+        }
+
+        System.out.println("Instantiating game...");
+        Game game = new Game(playerList);
+        System.out.println("Game instantiated!");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../../../resources/GameBoard.fxml"));
+            Parent root = loader.load();
+            GameBoardController controller = loader.getController();
+            controller.setGame(game);
+            Scene scene = new Scene(root);
+            //This line gets the Stage Information
+            Stage window=(Stage)((Node)e.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 }

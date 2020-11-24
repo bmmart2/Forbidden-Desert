@@ -1,7 +1,13 @@
 package com.bmmart2.forbiddendesert.Components;
 
+import javafx.scene.image.Image;
+
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Location {
 
@@ -14,7 +20,7 @@ public class Location {
     public static int TUNNELTILES = 3;
 
     private String desc;
-    private BufferedImage img;
+    private Image img;
     private LocationType type;
 
     protected Location() {
@@ -62,9 +68,11 @@ public class Location {
         return desc;
     }
 
-    public BufferedImage getImg() {
+    public Image getImg() {
         return img;
     }
+
+    public void setImg(Image img) { this.img = img; }
 
     public LocationType getType() {
         return type;
@@ -76,6 +84,11 @@ public class Location {
     protected static LinkedList<Location> generateLocations() {
         int i = 0;
         LinkedList<Location> list = new LinkedList<Location>();
+        try {
+            System.out.println(new File("").getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (i = 0; i < GEARTILES; i++) {
             list.add(new Location(LocationType.GEAR));

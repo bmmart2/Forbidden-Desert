@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bmmart2.forbiddendesert.Interface.MainMenuController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bmmart2.forbiddendesert.Controllers.MainMenuController">
    <children>
       <Pane layoutX="115.0" layoutY="353.0" prefHeight="190.0" prefWidth="700.0">
          <children>
@@ -27,7 +27,7 @@
          <children>
             <ImageView fitHeight="293.0" fitWidth="514.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@forbidden-desert.jpg" />
+                  <Image url="@assets/forbidden-desert.jpg" />
                </image>
             </ImageView>
          </children></Pane>
