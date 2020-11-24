@@ -39,19 +39,19 @@ public class Game {
         return players.get(activePlayer);
     }
 
-    public Game() {
-        collectedArtifacts = new HashMap<>();
-        barometer = new Barometer();
+    private Game() {
         players = new ArrayList<Player>();
+        collectedArtifacts = new HashMap<>();
         board = new Board();
         board.init();
         stormdeck = DeckCreator.generateStormDeck();
         geardeck = DeckCreator.generateGearDeck();
     }
 
-    public Game(ArrayList<Player> players) {
+    public Game(ArrayList<Player> players, int difficulty) {
         this();
         this.players = players;
+        barometer = new Barometer(players.size(), difficulty);
         Collections.shuffle(this.players);
     }
 

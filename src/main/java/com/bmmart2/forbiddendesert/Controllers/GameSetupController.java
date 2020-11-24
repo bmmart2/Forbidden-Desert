@@ -25,6 +25,8 @@ public class GameSetupController implements Initializable {
     private HashSet<Player.PlayerTypes> toggled;
 
     private IntegerProperty count = new SimpleIntegerProperty(0);
+    //TODO: Implement difficulty selection
+    int difficulty;
 
     public GameSetupController() throws IOException {
         toggled = new HashSet<>();
@@ -108,7 +110,7 @@ public class GameSetupController implements Initializable {
         }
 
         System.out.println("Instantiating game...");
-        Game game = new Game(playerList);
+        Game game = new Game(playerList, difficulty);
         System.out.println("Game instantiated!");
 
         try {
