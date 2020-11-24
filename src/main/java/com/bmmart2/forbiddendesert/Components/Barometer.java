@@ -1,18 +1,26 @@
 package com.bmmart2.forbiddendesert.Components;
 
-import java.util.LinkedList;
-
 public class Barometer {
+
+    //drawArr[i][j] = the cutoff point for turn size-j inclusive, for i-many players
+    private static int[][] drawArr = {
+            {},
+            {},
+            {-1,-1,0,3,7,10,12},
+            {-1,-1,0,4,8,11,13},
+            {-1,-1,0,4,8,11,13},
+            {-1,-1,0,5,9,12,14}
+    };
+
     private int tick;
-    private int[] drawArr = {-1,-1,0,5,9,12,14};
+    final private int playerCount;
+    boolean isMaxed;
 
-    public Barometer() {
-        tick = 0;
-    }
+    public Barometer(int handicap, int playerCount) {
+        tick = handicap;
+        this.playerCount = playerCount;
+        isMaxed = false;
 
-    public Barometer(int difficulty) {
-        tick = 0;
-        //TODO: add templates for different player sizes
     }
 
     public void setTick(int tick) {
@@ -20,7 +28,7 @@ public class Barometer {
     }
 
     public void setDrawArr(int[] drawArr) {
-        this.drawArr = drawArr;
+        this.drawArr[playerCount] = drawArr;
     }
 
     public int increase() {
@@ -38,16 +46,18 @@ public class Barometer {
     }
 
     public int[] getDrawArr() {
-        return drawArr;
+        return drawArr[playerCount];
     }
 
     public int getDrawAmt() {
+        if (isMaxed) return drawArr[playerCount].length-1;
         int i = 2;
         while (i < 7) {
-            if (tick <= drawArr[i]) {
+            if (tick <= drawArr[playerCount][i])
                 return i;
-            }
+            i++;
         }
-        return -1;
+        isMaxed = true;
+        return i;
     }
 }
