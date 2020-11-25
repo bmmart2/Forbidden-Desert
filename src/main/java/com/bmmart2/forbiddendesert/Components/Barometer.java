@@ -14,10 +14,11 @@ public class Barometer {
 
     private int tick;
     final private int playerCount;
+    int handicap;
     boolean isMaxed;
 
     public Barometer(int handicap, int playerCount) {
-        tick = handicap;
+        handicap = (tick = handicap);
         this.playerCount = playerCount;
         isMaxed = false;
 
@@ -59,5 +60,19 @@ public class Barometer {
         }
         isMaxed = true;
         return i;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Barometer b;
+
+        try {
+            super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        b = new Barometer(this.handicap, this.playerCount);
+        return b;
     }
 }
