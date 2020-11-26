@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Stack;
 
 public class Location {
@@ -23,6 +24,7 @@ public class Location {
     private Image img;
     private LocationType type;
 
+
     protected Location() {
         desc = "";
     }
@@ -30,38 +32,38 @@ public class Location {
     protected Location(LocationType type) {
         switch (type) {
             case WELL:
-                //TODO this.img = img;
                 this.desc = "This tile contains water.";
                 this.type = LocationType.WELL;
                 break;
             case MIRAGE:
-                //this.img = img;
                 this.desc = "This well has dried up.";
                 this.type = LocationType.MIRAGE;
                 break;
             case LANDINGPAD:
-                //this.img = img;
                 this.desc = "A suitable place to launch a rocket.";
                 this.type = LocationType.LANDINGPAD;
                 break;
             case GEAR:
-                //TODO: this.img = Stack<Img>.pop() or something
                 this.desc = "An artifact buried by the sands.";
                 this.type = LocationType.GEAR;
                 break;
             case TUNNEL:
-                //this.img = img;
                 this.desc = "A welcome relief from the scorching heat.";
                 this.type = LocationType.TUNNEL;
                 break;
             case STORM:
-                //this.img = img;
                 this.desc = "A dangerous storm.";
                 this.type = LocationType.STORM;
                 break;
             default:
                 throw new IllegalArgumentException("Please use a valid LocationType. Clues should be made as Clue() objects.");
         }
+        this.img = ImagePacker.DEFAULT_IMG;
+    }
+
+    protected Location withImg(Image img) {
+        this.img = img;
+        return this;
     }
 
     public String getDesc() {
@@ -84,21 +86,29 @@ public class Location {
     protected static LinkedList<Location> generateLocations() {
         int i = 0;
         LinkedList<Location> list = new LinkedList<Location>();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ImagePacker gearImgs = new ImagePacker();
+
         try {
-            System.out.println(new File("").getCanonicalPath());
-        } catch (IOException e) {
+            gearImgs.readDirectory(new File(Objects.requireNonNull(classLoader.getResource("assets/gear")).getPath()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         for (i = 0; i < GEARTILES; i++) {
-            list.add(new Location(LocationType.GEAR));
+            list.add(new Location(LocationType.GEAR).withImg(gearImgs.popImg()));
         }
+
+        Image waterImg = new Image(Objects.requireNonNull(classLoader.getResource("assets/water/water-tile.jpg")).toString());
         for (i = 0; i < WATERTILES; i++) {
-            list.add(new Location(LocationType.WELL));
+            list.add(new Location(LocationType.WELL).withImg(waterImg));
         }
+
+        Image waterFakeImg = new Image(Objects.requireNonNull(classLoader.getResource("assets/water/water-fake-tile.jpg")).toString());
         for (i = 0; i < WATERFAKETILES; i++) {
-            list.add(new Location(LocationType.MIRAGE));
+            list.add(new Location(LocationType.MIRAGE).withImg(waterFakeImg));
         }
+
+        //TODO: Finish images
         for (i = 0; i < LANDINGPADTILES; i++) {
             list.add(new Location(LocationType.LANDINGPAD));
         }

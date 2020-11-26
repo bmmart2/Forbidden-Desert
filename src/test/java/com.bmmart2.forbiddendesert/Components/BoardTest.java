@@ -13,12 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 //TODO: write more unit tests!
 
 class BoardTest {
+    
+    Location l = new Location();
 
     @Test
     void moveStorm() {
         Board b = new Board();
-        Tile t = new Tile();
-        Tile t1 = new Tile();
+        Tile t = new Tile(l);
+        Tile t1 = new Tile(l);
 
         //N and S coverage
         b.setStormLoc(new Point(2, 2));
@@ -32,7 +34,7 @@ class BoardTest {
         assertEquals(t, b.getTile(new Point(2,2)));
 
         //E and W coverage
-        Tile t3 = new Tile();
+        Tile t3 = new Tile(l);
         b.setTile(new Point(3,2), t3);
         b.moveStorm(Direction.EAST);
         assertEquals(t3, b.getTile(new Point(2, 2)));

@@ -10,15 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BarometerTest {
 
-    private Barometer[] barometers = init(0);
-
-    public static Barometer[] init(int difficulty) {
-        Barometer[] barometers = new Barometer[6];
-        for (int i = 2; i < 6; i++) {
-            barometers[i] = new Barometer(difficulty, i);
-        }
-        return Arrays.copyOfRange(barometers, 2, 6);
-    }
+    private final Barometer[] barometers = init(0);
 
     @Test
     void DifficultySettingDrawTest() {
@@ -32,7 +24,6 @@ class BarometerTest {
         Barometer b = new Barometer(handicap,4);
         assertEquals(handicap, b.getTick());
     }
-
 
     @Test
     void getDrawAmtForFirstTurn() {
@@ -49,6 +40,14 @@ class BarometerTest {
 
         expected = new int[]{4, 3, 3, 3};
         assertTrue(getDrawAmtTestHelper(barometers, 4, expected));
+    }
+
+    private static Barometer[] init(int difficulty) {
+        Barometer[] barometers = new Barometer[6];
+        for (int i = 2; i < 6; i++) {
+            barometers[i] = new Barometer(difficulty, i);
+        }
+        return Arrays.copyOfRange(barometers, 2, 6);
     }
 
     private static boolean getDrawAmtTestHelper(Barometer[] input, int tickIncrease, int[] expected) {

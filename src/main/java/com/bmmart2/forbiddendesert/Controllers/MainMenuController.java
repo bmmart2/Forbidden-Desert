@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainMenuController {
 
@@ -18,7 +19,7 @@ public class MainMenuController {
 
     public void start(ActionEvent e) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../../../../../resources/GameSetup.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("GameSetup.fxml")));
             Scene scene = new Scene(root);
             //This line gets the Stage Information
             Stage window=(Stage)((Node)e.getSource()).getScene().getWindow();

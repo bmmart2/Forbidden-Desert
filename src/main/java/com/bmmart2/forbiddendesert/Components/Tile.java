@@ -4,25 +4,27 @@ import javafx.scene.image.Image;
 
 public class Tile {
 
+    private static final Image normalBackImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/board-piece-hidden.jpg").toString());
+    private static final Image waterBackImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/water/board-piece-hidden-water.jpg").toString());
+
     private Location loc;
     private boolean flipped;
     private int sand;
     private Artifact item;
-    private Image flippedImg120x120;
-    private int backImg;
+    private Image backImg;
 
-    protected Tile() {
+    private Tile() {
         flipped = false;
         sand = 0;
         item = Artifact.NULL;
-        backImg = -1;
+        backImg = normalBackImg;
     }
 
     protected Tile(Location l) {
-        flipped = false;
-        sand = 0;
-        item = Artifact.NULL;
+        this();
         loc = l;
+        if (l.getType() == LocationType.MIRAGE || l.getType() == LocationType.WELL)
+            backImg = waterBackImg;
     }
 
     public Location getLoc() {
@@ -45,6 +47,10 @@ public class Tile {
 
     public boolean hasItem() {
         return !(item == Artifact.NULL);
+    }
+
+    public Image getBackImg() {
+        return backImg;
     }
 
     protected void dig() {

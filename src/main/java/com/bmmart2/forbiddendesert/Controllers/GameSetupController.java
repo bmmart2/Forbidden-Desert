@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class GameSetupController implements Initializable {
+public class GameSetupController {
     @FXML
     private Label countLabel;
     private ArrayList<Player> playerList;
@@ -32,8 +32,8 @@ public class GameSetupController implements Initializable {
         toggled = new HashSet<>();
     }
 
-    @Override
-    public void initialize(URL loc, ResourceBundle res) {
+
+    public void initialize() {
         countLabel.textProperty().bind(count.asString());
     }
 
@@ -114,10 +114,11 @@ public class GameSetupController implements Initializable {
         System.out.println("Game instantiated!");
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../../../resources/GameBoard.fxml"));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("GameBoard.fxml")));
             Parent root = loader.load();
             GameBoardController controller = loader.getController();
             controller.setGame(game);
+            controller.reloadBoard();
             Scene scene = new Scene(root);
             //This line gets the Stage Information
             Stage window=(Stage)((Node)e.getSource()).getScene().getWindow();
