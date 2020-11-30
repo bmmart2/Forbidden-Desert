@@ -26,6 +26,7 @@ public class Game {
     private int activePlayer;
     private Deck stormdeck;
     private Deck geardeck;
+    private Tile startingTile;
 
     public int getPlayerCount() {
         return players.size();

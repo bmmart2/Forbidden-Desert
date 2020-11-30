@@ -20,6 +20,8 @@ public class Location {
     private Image img;
     private LocationType type;
 
+    private boolean isStartingLoc = false;
+
 
     protected Location() {
         desc = "";
@@ -55,6 +57,14 @@ public class Location {
                 throw new IllegalArgumentException("Please use a valid LocationType. Clues should be made as Clue() objects.");
         }
         this.img = ImagePacker.DEFAULT_IMG;
+    }
+
+    public void toggleStartingLoc() {
+        isStartingLoc = true;
+    }
+
+    public boolean isStartingLoc() {
+        return isStartingLoc;
     }
 
     protected Location withImg(Image img) {
@@ -93,6 +103,7 @@ public class Location {
         for (i = 0; i < GEARTILES; i++) {
             list.add(new Location(LocationType.GEAR).withImg(gearImgs.popImg()));
         }
+        list.get((int)(Math.random()*list.size())).toggleStartingLoc();
 
         Image waterImg = new Image(Objects.requireNonNull(classLoader.getResource("assets/water/water-tile.jpg")).toString());
         for (i = 0; i < WATERTILES; i++) {
