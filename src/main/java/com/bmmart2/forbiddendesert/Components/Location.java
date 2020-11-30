@@ -117,19 +117,19 @@ public class Location {
 
         //TODO: Finish images
         for (i = 0; i < LANDINGPADTILES; i++) {
-            list.add(new Location(LocationType.LANDINGPAD));
+            list.add(new Location(LocationType.LANDINGPAD).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/landing-pad.jpg")).toString())));
         }
         for (i = 0; i < TUNNELTILES; i++) {
-            list.add(new Location(LocationType.TUNNEL));
+            list.add(new Location(LocationType.TUNNEL).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/tunnel.jpg")).toString())));
         }
-        list.add(new Clue(Artifact.COMPASS, Clue.Orientation.NS));
-        list.add(new Clue(Artifact.COMPASS, Clue.Orientation.EW));
-        list.add(new Clue(Artifact.PROPELLER, Clue.Orientation.NS));
-        list.add(new Clue(Artifact.PROPELLER, Clue.Orientation.EW));
-        list.add(new Clue(Artifact.ENGINE, Clue.Orientation.NS));
-        list.add(new Clue(Artifact.ENGINE, Clue.Orientation.EW));
-        list.add(new Clue(Artifact.CRYSTAL, Clue.Orientation.NS));
-        list.add(new Clue(Artifact.CRYSTAL, Clue.Orientation.EW));
+        list.add(new Clue(Artifact.COMPASS, Clue.Orientation.NS).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/compass-UD.jpg")).toString())));
+        list.add(new Clue(Artifact.COMPASS, Clue.Orientation.EW).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/compass-LR.jpg")).toString())));
+        list.add(new Clue(Artifact.PROPELLER, Clue.Orientation.NS).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/propeller-UD.jpg")).toString())));
+        list.add(new Clue(Artifact.PROPELLER, Clue.Orientation.EW).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/propeller-LR.jpg")).toString())));
+        list.add(new Clue(Artifact.ENGINE, Clue.Orientation.NS).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/motor-UD.jpg")).toString())));
+        list.add(new Clue(Artifact.ENGINE, Clue.Orientation.EW).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/motor-LR.jpg")).toString())));
+        list.add(new Clue(Artifact.CRYSTAL, Clue.Orientation.NS).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/monolith-UD.jpg")).toString())));
+        list.add(new Clue(Artifact.CRYSTAL, Clue.Orientation.EW).withImg(new Image(Objects.requireNonNull(classLoader.getResource("assets/other-tiles/monolith-LR.jpg")).toString())));
 
         return list;
     }

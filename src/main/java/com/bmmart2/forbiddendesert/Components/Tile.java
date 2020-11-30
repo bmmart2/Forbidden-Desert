@@ -7,6 +7,7 @@ public class Tile {
     private static final Image normalBackImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/board-piece-hidden.jpg").toString());
     private static final Image waterBackImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/water/board-piece-hidden-water.jpg").toString());
     private static final Image startingBackImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/starting-tile.jpg").toString());
+    private static final Image stormImg = new Image(Thread.currentThread().getContextClassLoader().getResource("assets/storm.jpg").toString());
 
     private Location loc;
     private boolean flipped;
@@ -24,10 +25,13 @@ public class Tile {
     protected Tile(Location l) {
         this();
         loc = l;
+
         if (l.getType() == LocationType.MIRAGE || l.getType() == LocationType.WELL)
             backImg = waterBackImg;
         else if (l.isStartingLoc())
             backImg = startingBackImg;
+        else if (l.getType() == LocationType.STORM)
+            backImg = stormImg;
     }
 
     public Location getLoc() {
