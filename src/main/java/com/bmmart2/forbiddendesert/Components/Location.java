@@ -2,13 +2,9 @@ package com.bmmart2.forbiddendesert.Components;
 
 import javafx.scene.image.Image;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Stack;
 
 public class Location {
 
@@ -90,7 +86,7 @@ public class Location {
         ImagePacker gearImgs = new ImagePacker();
 
         try {
-            gearImgs.readDirectory(new File(Objects.requireNonNull(classLoader.getResource("assets/gear")).getPath()));
+            gearImgs.readDirectory(new File(Objects.requireNonNull(classLoader.getResource("assets/gear-tiles")).getPath()));
         } catch (Exception e) {
             e.printStackTrace();
         }
